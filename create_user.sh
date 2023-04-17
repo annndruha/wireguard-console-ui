@@ -41,14 +41,13 @@ echo PersistentKeepalive = 20 >>$client_conf
 
 # ===================================================================================================================
 # Regenerate wg0.conf based on clients folder
-PROFILE="wg0_test.conf"
+PROFILE="wg0.conf"
 rm $PROFILE 2> /dev/null
 
 # Create a header of wg0.conf
 echo [Interface] >>$PROFILE
 echo Address = 10.10.0.1/24 >>$PROFILE
 echo Address = fd86:ea04:1115::1/64 >>$PROFILE
-echo SaveConfig = true >>$PROFILE
 echo "PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE; ip6tables -A FORWARD -i ens3 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o ens3 -j MASQUERADE" >>$PROFILE
 echo "PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ens3 -j MASQUERADE; ip6tables -D FORWARD -i ens3 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o ens3 -j MASQUERADE" >>$PROFILE
 echo ListenPort = $SERVER_PORT >>$PROFILE
@@ -78,3 +77,4 @@ done
 sh backup_statistic.sh
 wg-quick down wg0
 wg-quick up wg0
+rm $PROFILE 2> /dev/null
