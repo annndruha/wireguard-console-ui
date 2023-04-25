@@ -51,7 +51,6 @@ for file in files:
                     sent[user] += s
                     received[user] += r
 
-
 sum_traffic = []
 for user in sent.keys():
     sum_traffic.append((user, sent[user], received[user], sent[user] + received[user]))
@@ -64,13 +63,15 @@ for name, s, r, t in sum_traffic:
     if tail == '':
         name = name[:24] + '...'
 
-    if name not in active_users:
-        name = "\033[0;31m"+name+"\033[0m"
-
     s_text = f"{s / (2 ** 30):.2f}"
     s_text = ' ' * (10 - len(s_text)) + s_text
     r_text = f"{r / (2 ** 30):.2f} "
     r_text = ' ' * (10 - len(r_text)) + r_text
     t_text = f"{t / (2 ** 30):.2f} "
     t_text = ' ' * (10 - len(t_text)) + t_text
-    print(f"{name}{tail}{s_text} GiB{r_text} GiB{t_text} GiB")
+
+    text = f"{name}{tail}{s_text} GiB{r_text} GiB{t_text} GiB"
+    if name in active_users:
+        print(text)
+    else:
+        print("\033[0;31m" + text + "\033[0m")
