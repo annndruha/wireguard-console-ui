@@ -62,12 +62,6 @@ for filepath in clients/*.conf; do
   done <"$filepath"
 done
 
-# ====================================================
-# New backup method
-mkdir "statistic_new_method" 2> /dev/null
-filestat="statistic_new_method/stat_$(date +%F__%H-%M-%S).txt"
-wg show > "${filestat}"
-
 # ===================================================================================================================
 # Restart interface
 wg-quick down wg0
