@@ -1,6 +1,9 @@
 import glob
+import os
 
 files = glob.glob('statistic/stat_*.txt')
+active_users = glob.glob('clients/*.conf')
+active_users = [os.path.splitext(os.path.basename(user))[0] for user in active_users]
 
 convert = {
     'B': 1,
@@ -60,6 +63,10 @@ for name, s, r, t in sum_traffic:
     tail = ' ' * (27 - len(name))
     if tail == '':
         name = name[:24] + '...'
+
+    if name not in active_users:
+        name = "\033[0;31m"+name+"\033[0m"
+
     s_text = f"{s / (2 ** 30):.2f}"
     s_text = ' ' * (10 - len(s_text)) + s_text
     r_text = f"{r / (2 ** 30):.2f} "
