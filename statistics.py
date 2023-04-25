@@ -49,17 +49,21 @@ for file in files:
                     received[user] += r
 
 
-# sum_traffic = dict()
-# for user in sent.keys():
-#     sum_traffic[user] = (sent[user], received[user], sent[user] + received[user])
+sum_traffic = []
+for user in sent.keys():
+    sum_traffic.append((user, sent[user], received[user], sent[user] + received[user]))
 
+sum_traffic = sorted(sum_traffic, key=lambda d: d[3], reverse=True)
 
-for name, s, r in zip(sent.keys(), sent.values(), received.values()):
+print(f"===========USERNAME==================SEND======RECEIVED=======TOTAL==")
+for name, s, r, t in sum_traffic:
     tail = ' ' * (27 - len(name))
     if tail == '':
         name = name[:24] + '...'
     s_text = f"{s / (2 ** 30):.2f}"
-    s_text = ' ' * (6 - len(s_text)) + s_text
+    s_text = ' ' * (10 - len(s_text)) + s_text
     r_text = f"{r / (2 ** 30):.2f} "
-    r_text = ' ' * (8 - len(r_text)) + r_text
-    print(f"{name}{tail}{s_text} GiB{r_text} GiB")
+    r_text = ' ' * (10 - len(r_text)) + r_text
+    t_text = f"{t / (2 ** 30):.2f} "
+    t_text = ' ' * (10 - len(t_text)) + t_text
+    print(f"{name}{tail}{s_text} GiB{r_text} GiB{t_text} GiB")
