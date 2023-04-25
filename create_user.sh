@@ -6,19 +6,21 @@ SERVER_PVKEY=$(cat serverprivatekey)           # Read file with server private k
 SERVER_PBKEY=$(echo $SERVER_PVKEY | wg pubkey) # Calculate server publickey for clients configs
 
 # ===================================================================================================================
+# Get available local ip last digits (ld): (10.10.0.ld)
 # Yes. It's a python in shell script. Sorry for this.
 get_new_ip="get_new_ip.py"
-echo "import glob" >>$get_new_ip
-echo "files = glob.glob('clients/*.conf')" >>$get_new_ip
-echo "allocated = []" >>$get_new_ip
-echo "for file in files:" >>$get_new_ip
-echo "    with open(file, 'r') as f:" >>$get_new_ip
-echo "        lines = f.readlines()" >>$get_new_ip
-echo "    ip = lines[2].replace('Address = ', '').split('/')[0]" >>$get_new_ip
-echo "    last_number = int(ip.split('.')[3])" >>$get_new_ip
-echo "    allocated.append(last_number)" >>$get_new_ip
-echo "available = list(set(range(2, 256)) - set(allocated))" >>$get_new_ip
-echo "print(available[0])" >>$get_new_ip
+echo \
+"import glob
+files = glob.glob('clients/*.conf')
+allocated = []
+for file in files:
+    with open(file, 'r') as f:
+        lines = f.readlines()
+    ip = lines[2].replace('Address = ', '').split('/')[0]
+    last_number = int(ip.split('.')[3])
+    allocated.append(last_number)
+available = list(set(range(2, 256)) - set(allocated))
+print(available[0])" \ >>$get_new_ip
 ld=$(python3 $get_new_ip)
 rm $get_new_ip
 
