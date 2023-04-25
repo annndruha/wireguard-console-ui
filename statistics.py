@@ -25,16 +25,28 @@ received = dict()
 for file in files:
     with open(file, 'r') as f:
         lines = f.readlines()
+
+    new_lines = []
     for i, line in enumerate(lines):
-        if line.strip().startswith('transfer'):
-            user = lines[i - 4].strip()
-            s, r = parce(line)
-            if user not in sent:
-                sent[user] = s
-                received[user] = r
-            else:
-                sent[user] += s
-                received[user] += r
+        if line == '\n':
+            new_lines.append('#%$^&@#')
+        else:
+            new_lines.append(line)
+    text = ''.join(new_lines)
+    users_texts = text.split('#%$^&@#')
+
+    for i, user_text in enumerate(users_texts[1:]):
+        user = user_text.split('\n')[0]
+        userdata = user_text.split('\n')
+        for line in userdata:
+            if line.strip().startswith('transfer'):
+                s, r = parce(line)
+                if user not in sent:
+                    sent[user] = s
+                    received[user] = r
+                else:
+                    sent[user] += s
+                    received[user] += r
 
 
 # sum_traffic = dict()

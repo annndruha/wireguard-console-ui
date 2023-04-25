@@ -48,6 +48,7 @@ echo "Total clients: \033[0;32m$total_files\033[0m"
 mkdir "statistic" 2> /dev/null
 filestat="statistic/stat_$(date +%F__%H-%M-%S).txt"
 wg show > "${filestat}"
+
 sed -i "s*peer: **" "${filestat}"
 for filepath in clients/*.conf; do
   n=1
@@ -62,6 +63,12 @@ for filepath in clients/*.conf; do
     n=$((n + 1))
   done <"$filepath"
 done
+
+# ====================================================
+# New backup method
+mkdir "statistic_new_method" 2> /dev/null
+filestat="statistic_new_method/stat_$(date +%F__%H-%M-%S).txt"
+wg show > "${filestat}"
 
 # ===================================================================================================================
 # Restart interface
