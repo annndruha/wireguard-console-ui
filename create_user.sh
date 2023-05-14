@@ -1,11 +1,11 @@
 # ===================================================================================================================
 # Set Server metadata
 SERVER_PORT=51820                              # Wireguard port
-ENDPOINT=vpn.annndruha.space:$SERVER_PORT      # This address will write to clients configs
 SERVER_PVKEY=$(cat serverprivatekey)           # Read file with server private key
-SERVER_PBKEY=$(echo $SERVER_PVKEY | wg pubkey) # Calculate server publickey for clients configs
+ENDPOINT=vpn.annndruha.space:$SERVER_PORT      # This address will write to clients configs
 
 # ===================================================================================================================
+
 # Get available local ip last digits (ld): (10.10.0.ld)
 # Yes. It's a python in shell script. Sorry for this.
 get_new_ip="get_new_ip.py"
@@ -39,6 +39,7 @@ then
 fi
 # ===================================================================================================================
 # Generate new client
+SERVER_PBKEY=$(echo $SERVER_PVKEY | wg pubkey) # Calculate server publickey for clients configs
 
 echo [Interface] >>$client_conf
 echo PrivateKey = "$(wg genkey)" >>$client_conf
