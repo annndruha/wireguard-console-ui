@@ -1,5 +1,5 @@
 mkdir "statistic" 2> /dev/null
-filestat="statistic/temp.txt"
+filestat="statistic/stat_temp.txt"
 
 wg show >"${filestat}"
 
