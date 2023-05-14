@@ -19,14 +19,18 @@ echo PrivateKey = $SERVER_PVKEY >>$PROFILE
 
 # Parce files in clients folder an add data to wg0.conf
 total_files=0
-for filepath in clients/*.conf; do
+for filepath in clients/*.conf;
+do
   n=1
-  while read -r line; do
-    if [ $n = 2 ]; then
+  while read -r line;
+  do
+    if [ $n = 2 ];
+    then
       key=$(echo "$line" | cut -c 14-)
       pubkey=$(echo "${key}" | wg pubkey)
     fi
-    if [ $n = 3 ]; then
+    if [ $n = 3 ];
+    then
       address=$(echo "$line" | cut -c 11-)
     fi
     n=$((n + 1))
@@ -48,10 +52,13 @@ filestat="_statistic/stat_$(date +%F_%H-%M-%S).txt"
 wg show > "${filestat}"
 
 sed -i "s*peer: **" "${filestat}"
-for filepath in clients/*.conf; do
+for filepath in clients/*.conf;
+do
   n=1
-  while read -r line; do
-    if [ $n = 2 ]; then
+  while read -r line;
+  do
+    if [ $n = 2 ];
+    then
       key=$(echo "$line" | cut -c 14-)
       pubkey=$(echo "${key}" | wg pubkey)
       short_peer=$(echo "$filepath" | cut -c 9- | rev | cut -c 6- | rev)

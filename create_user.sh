@@ -32,7 +32,8 @@ mkdir "clients" 2>/dev/null
 read -r -p "New username: " name
 client_conf="clients/${name}.conf"
 
-if [ -e "$client_conf" ]; then
+if [ -e "$client_conf" ];
+then
   echo "\033[0;31mUser with this name already exist. Abort.\033[0m"
   exit 1
 fi
