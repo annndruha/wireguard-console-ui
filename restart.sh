@@ -43,8 +43,8 @@ echo "Total clients: \033[0;32m$total_files\033[0m"
 
 # ===================================================================================================================
 # Backup statistics
-mkdir "statistic" 2> /dev/null
-filestat="statistic/stat_$(date +%F__%H-%M-%S).txt"
+mkdir "_statistic" 2> /dev/null
+filestat="_statistic/stat_$(date +%F_%H-%M-%S).txt"
 wg show > "${filestat}"
 
 sed -i "s*peer: **" "${filestat}"

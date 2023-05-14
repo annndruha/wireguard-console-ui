@@ -23,5 +23,5 @@ sh delete_user.sh
 sh restart.sh
 
 # Show traffic statistics
-sh show_statistic.sh
+sh statistics.sh
 ```

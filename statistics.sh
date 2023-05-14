@@ -1,10 +1,8 @@
-mkdir "statistic" 2> /dev/null
-filestat="statistic/stat_temp.txt"
-
+mkdir "_statistic" 2> /dev/null
+filestat="_statistic/stat_temp.txt"
 wg show >"${filestat}"
 
 sed -i "s*peer: **" "${filestat}"
-
 for filepath in clients/*.conf; do
   n=1
   while read -r line; do
@@ -19,6 +17,6 @@ for filepath in clients/*.conf; do
   done <"$filepath"
 done
 
-python3 statistics.py
+python3 _statistics_calc.py
 
 rm "${filestat}"
