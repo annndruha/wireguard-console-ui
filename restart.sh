@@ -5,8 +5,8 @@ SERVER_PVKEY=$(cat serverprivatekey)           # Read file with server private k
 
 # ===================================================================================================================
 # Regenerate wg0.conf based on clients folder
-PROFILE="wg0.conf"
 rm $PROFILE 2>/dev/null
+PROFILE="wg0.conf"
 
 # Create a header of wg0.conf
 echo [Interface] >>$PROFILE
@@ -71,6 +71,6 @@ done
 
 # ===================================================================================================================
 # Restart interface
-wg-quick down wg0
-wg-quick up wg0
+wg-quick down ./$PROFILE
+wg-quick up ./$PROFILE
 rm $PROFILE 2>/dev/null
